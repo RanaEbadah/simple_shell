@@ -95,3 +95,25 @@ ssize_t _getLine(char **line, size_t *s, void *stream)
 	(*line)[count] = '\0';
 	return (count);
 }
+
+
+
+/**
+*excludeUnNeedTerminatot - Remove unNeeded terminators from the text end
+*@str: the input string.
+*Return: the new modified string
+*/
+char *excludeUnNeedTerminatot(char *str)
+{
+	int len;
+
+	len = _strlen(str);
+	if (str[len - 1] == ' ' || str[len - 1] == '\t' ||
+		str[len - 1] == '\n' || str[len - 1] == '\v' ||
+		str[len - 1] == '\f' || str[len - 1] == '\r')
+	{
+		str[len - 1] = '\0';
+	}
+
+	return (str);
+}

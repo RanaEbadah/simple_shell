@@ -35,11 +35,13 @@ int commandIsSpaceOrEnter(char *strCommand);
 /*int printString(char* str);*/
 char *_strdup(char *str);
 ssize_t _getLine(char **line, size_t *s, void *stream);
+char *excludeUnNeedTerminatot(char *str);
 
 
 /*main.c*/
-char *excludeUnNeedTerminatot(char *str);
+
 void exitTheShell(char *line, int exitStatus);
 int notFound(char *shellName, int errorNum, char *commandName);
 int executeTheExecCommand(char *filePath, char **args, char *envp[]);
-#endif
+void executeCommand(char *line, char *path, char **args, char **envp, char **argv, int *errorNum);
+#endif /*SHELL_H */

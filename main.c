@@ -11,10 +11,13 @@
 int main(__attribute__((unused)) int argc,
 __attribute__((unused)) char *argv[], char *envp[])
 {
-	char *line = NULL, *path, *filePath, **args, *envStr ="env";
-	char *argsStr, **envpCopy = NULL, *exitStr = "exit";
+	char *line = NULL, *path, **args;
+	char **envpCopy = NULL;
 	size_t len;
-	int executed, readed, errorNum = 1;
+	int  readed;
+	static int errorNum;
+
+	errorNum = 1;
 
 	envpCopy = envp;
 	path = getPathFromEnv(envpCopy);/*get the path*/
@@ -23,40 +26,18 @@ __attribute__((unused)) char *argv[], char *envp[])
 		printf("$ ");
 		readed = getline(&line, &len, stdin);
 		if (readed == -1) /*EOF handling*/
-
 		exitTheShell(line, 0);
+
 		if (commandIsSpaceOrEnter(line) == 1)
 		continue;/*if the input is enter or space continue*/
 
 		args = handleCommandLine(line); /*parse the line to command and arguments*/
 		if ((args == NULL) || (path == NULL))
 		return (1);
-
-		argsStr = excludeUnNeedTerminatot(args[0]);
-		if (_strcmp(argsStr, exitStr) == 0)
-		{
-			/*exit*/
-			exitTheShell(line, 1);
-		}
-		else if (_strcmp(argsStr, envStr) == 0)
-		{
-			/*env*/
-			printf("This is env command\n");
-		}
-		else
-		{
-			filePath = isExec(path, args[0]);
-			if (filePath == NULL)
-			{
-				errorNum = notFound(argv[0], errorNum, args[0]);
-				continue;
-			}
-			else
-			{
-				executed = executeTheExecCommand(filePath, args, envp);
-				if (executed == 1)
-				return (1);
-			}}}
+/********************************/
+		executeCommand(line, path, args, envp, argv, &errorNum);
+/*********************************/
+	}
 	return (0);
 }
 
@@ -74,26 +55,6 @@ int notFound(char *shellName, int errorNum, char *commandName)
 	return (errorNum);
 }
 
-
-/**
-*excludeUnNeedTerminatot - Remove unNeeded terminators from the text end
-*@str: the input string.
-*Return: the new modified string
-*/
-char *excludeUnNeedTerminatot(char *str)
-{
-	int len;
-
-	len = _strlen(str);
-	if (str[len - 1] == ' ' || str[len - 1] == '\t' ||
-		str[len - 1] == '\n' || str[len - 1] == '\v' ||
-		str[len - 1] == '\f' || str[len - 1] == '\r')
-	{
-		str[len - 1] = '\0';
-	}
-
-	return (str);
-}
 
 /**
 *exitTheShell - exit the shell.
@@ -132,4 +93,47 @@ int executeTheExecCommand(char *filePath, char **args, char *envp[])
 	else /*it is a parent*/
 	wait(&status);
 	return (0);
+}
+
+
+/**
+*executeCommand - execute the command
+*@line: the line which the user entered
+*@path: the path
+*@args: arguments
+*@envp: envp parameter
+*@argv: argv parameter
+*@errorNum: the number of the error
+*Return: void
+*/
+void executeCommand(char *line, char *path,
+char **args, char **envp, char **argv, int *errorNum)
+{
+	char *argsStr, *exitStr = "exit", *envStr = "env", *filePath;
+
+	argsStr = excludeUnNeedTerminatot(args[0]);
+
+	if (_strcmp(argsStr, exitStr) == 0)
+	{
+		/* Exit */
+		exitTheShell(line, 1);
+	}
+	else if (_strcmp(argsStr, envStr) == 0)
+	{
+		/* Env */
+		printf("This is the env command\n");
+	}
+	else
+	{
+		filePath = isExec(path, args[0]);
+
+		if (filePath == NULL)
+		{
+			*errorNum = notFound(argv[0], *errorNum, args[0]);
+		}
+		else
+		{
+			executeTheExecCommand(filePath, args, envp);
+		}
+	}
 }
