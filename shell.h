@@ -13,6 +13,7 @@
 #include<limits.h>
 #include<errno.h>
 #include <dirent.h>
+#include <stdint.h>
 
 
 /*string functions*/
@@ -24,13 +25,21 @@ int _strncmp(char *str1, char *str2, int n);
 
 
 /*shell.c functions*/
-char** handleCommandLine(char *command);
-char* getPathFromEnv(char *env[]);
-char* isExec(char *path, char *fileName);
+char **handleCommandLine(char *command);
+char *getPathFromEnv(char *env[]);
+char *isExec(char *path, char *fileName);
 int CommandIsSpace(char *command);
 int commandIsSpaceOrEnter(char *strCommand);
 
 /*functions.c*/
 /*int printString(char* str);*/
-char* _strdup(char *str);
+char *_strdup(char *str);
+ssize_t _getLine(char **line, size_t *s, void *stream);
+
+
+/*main.c*/
+char *excludeUnNeedTerminatot(char *str);
+void exitTheShell(char *line, int exitStatus);
+int notFound(char *shellName, int errorNum, char *commandName);
+int executeTheExecCommand(char *filePath, char **args, char *envp[]);
 #endif
