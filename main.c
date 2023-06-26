@@ -78,7 +78,7 @@ void exitTheShell(char *line, int exitStatus)
 */
 int executeTheExecCommand(char *filePath, char **args, char *envp[])
 {
-	int status, executed;
+	int status, executed, i = 0;
 	pid_t pid;
 
 	pid = fork();/*we will execute the command*/
@@ -86,6 +86,11 @@ int executeTheExecCommand(char *filePath, char **args, char *envp[])
 	return (1);
 	else if (pid == 0)
 	{
+		while(args[i] != NULL)
+		{
+			args[i] = excludeUnNeedTerminatot(args[i]);
+			i++;
+		}
 		executed = execve(filePath, args, envp);
 		if (executed == -1)
 		return (1);
