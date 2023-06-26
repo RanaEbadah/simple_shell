@@ -86,7 +86,7 @@ int executeTheExecCommand(char *filePath, char **args, char *envp[])
 	return (1);
 	else if (pid == 0)
 	{
-		while(args[i] != NULL)
+		while (args[i] != NULL)
 		{
 			args[i] = excludeUnNeedTerminatot(args[i]);
 			i++;
