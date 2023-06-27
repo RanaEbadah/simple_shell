@@ -95,12 +95,8 @@ int _getEnv()
     
 	while (*env != NULL)
 	{
-		printInteger(_strlen(*env));
-
-		printString("\n");
 		printString(*env);
 		printString("\n");
-
 		env++;
 	}
 
