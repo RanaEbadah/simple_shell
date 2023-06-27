@@ -53,7 +53,6 @@ __attribute__((unused)) char *argv[], char *envp[])
 			executeCommand(path, args, envp, argv, &errorNum);
 		}
 	}
-	free(line);
 	return (0);
 }
 
@@ -169,7 +168,7 @@ char **args, char **envp, char **argv, int *errorNum)
 	{
 		/* Env */
 		printString("This is the env command\n");
-		_getEnv();
+		_getEnv(envp);
 	}
 	else
 	{

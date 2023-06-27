@@ -88,15 +88,16 @@ void printInteger(int num)
 	write(STDOUT_FILENO, &str[i], 1);
 }
 
-int _getEnv()
+int _getEnv(char **env)
 {
-	extern char** environ;
-	char** env = environ;
-    
+	if(env == NULL)
+	return (-1);
+
 	while (*env != NULL)
 	{
 		printString(*env);
 		printString("\n");
+
 		env++;
 	}
 
