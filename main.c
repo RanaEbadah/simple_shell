@@ -64,22 +64,29 @@ int notFound(char *shellName, int errorNum, char *commandName)
 {
 	int errorMsgLen, shellNamelen, commandNameLen;
 	char errorMsg[] = ": not found\n";
+	char *errorNumptr;
 
-	if((shellName == NULL) || (commandName == NULL))
+	if ((shellName == NULL) || (commandName == NULL))
 	return (-1);
 
+	errorNumptr = malloc(sizeof(int));
+	if (errorNumptr == NULL)
+	return (-1);
+
+	*errorNumptr = errorNum;
 	errorMsgLen = _strlen(errorMsg);
 	shellNamelen = _strlen(shellName);
 	commandNameLen = _strlen(commandName);
 
 	write(STDOUT_FILENO, shellName, shellNamelen);
-    write(STDOUT_FILENO, ": ", 2);
-    write(STDOUT_FILENO, &errorNum, sizeof(errorNum));
-    write(STDOUT_FILENO, ": ", 2);
-    write(STDOUT_FILENO, commandName, commandNameLen);
-    write(STDOUT_FILENO, errorMsg, errorMsgLen); 
+	write(STDOUT_FILENO, ": ", 2);
+	printInteger(errorNum);
+	write(STDOUT_FILENO, ": ", 2);
+	write(STDOUT_FILENO, commandName, commandNameLen);
+	write(STDOUT_FILENO, errorMsg, errorMsgLen);
 
 	errorNum++;
+	free(errorNumptr);
 	return (errorNum);
 }
 

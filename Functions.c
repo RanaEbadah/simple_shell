@@ -64,3 +64,26 @@ char *excludeUnNeedTerminatot(char *str)
 
 	return (str);
 }
+
+/**
+*printInteger - print int
+*@num: the input int to be print.
+*Return: void
+*/
+void printInteger(int num)
+{
+	char str[20];
+	int len = 0, digit;
+
+	/* Convert the integer to a string of digits in reverse order */
+	while (num != 0)
+	{
+		digit = num % 10;
+		str[len++] = digit + '0';
+		num /= 10;
+	}
+
+	/* Write the string in reverse*/
+	for (int i = len - 1; i >= 0; i--)
+	write(STDOUT_FILENO, &str[i], 1);
+}
