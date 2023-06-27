@@ -97,7 +97,6 @@ int _getEnv(char **env)
 	{
 		printString(*env);
 		printString("\n");
-
 		env++;
 	}
 
