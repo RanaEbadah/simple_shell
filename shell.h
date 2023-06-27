@@ -44,4 +44,17 @@ void exitTheShell(char *line, int exitStatus);
 int notFound(char *shellName, int errorNum, char *commandName);
 int executeTheExecCommand(char *filePath, char **args, char *envp[]);
 void executeCommand(char *line, char *path, char **args, char **envp, char **argv, int *errorNum);
+
+/*sh_env.c*/
+
+
+
+/*sh_exit.c*/
+int sh_atoi(char *s);
+void sh_puts(char *str);
+int sh_putchar(char c);
+int sh_exit(char *arg, int *status);
+
+
+
 #endif /*SHELL_H */
