@@ -88,9 +88,14 @@ void printInteger(int num)
 	write(STDOUT_FILENO, &str[i], 1);
 }
 
+/**
+*_getEnv - print env
+*@env: the input int to be print.
+*Return: int
+*/
 int _getEnv(char **env)
 {
-	if(env == NULL)
+	if (env == NULL)
 	return (-1);
 
 	while (*env != NULL)
