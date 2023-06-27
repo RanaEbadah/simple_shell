@@ -80,7 +80,10 @@ int executeTheExecCommand(char *filePath, char **args, char *envp[])
 		return (1);
 	}
 	else /*it is a parent*/
-	wait(&status);
+	{
+		wait(&status);
+		free(filePath);
+	}
 	return (0);
 }
 
@@ -111,7 +114,10 @@ char **args, char **envp, char **argv, int *errorNum)
 	{
 		filePath = isExec(path, args[0]);
 		if (filePath == NULL)
-		*errorNum = notFound(argv[0], *errorNum, args[0]);
+		{
+			free(filePath);
+			*errorNum = notFound(argv[0], *errorNum, args[0]);
+		}
 		else
 		executeTheExecCommand(filePath, args, envp);
 	}
