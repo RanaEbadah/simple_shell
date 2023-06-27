@@ -32,9 +32,9 @@ int CommandIsSpace(char *command);
 int commandIsSpaceOrEnter(char *strCommand);
 
 /*functions.c*/
-/*int printString(char* str);*/
+int printString(char* str);
 char *_strdup(char *str);
-ssize_t _getLine(char **line, size_t *s, void *stream);
+/*ssize_t _getLine(char **line, size_t *s, void *stream);*/
 char *excludeUnNeedTerminatot(char *str);
 
 

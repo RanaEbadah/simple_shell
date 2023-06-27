@@ -27,7 +27,6 @@ char **handleCommandLine(char *command)
 	{
 		if (commandIsSpaceOrEnter(token) != 1)
 		{
-			/*printf("The token is %s\n", token);*/
 			args[tokenCount] = token;
 			tokenCount++;
 		}

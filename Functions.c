@@ -22,7 +22,6 @@ int printString(char *str)
 	return (written);
 }
 
-
 /**
 *_strdup - create a new string by duplicating an existing string
 *@str: the string that will be copied.
@@ -45,58 +44,6 @@ char *_strdup(char *str)
 	}
 	return (newStr);
 }
-
-/**
-*_getLine - the implementation of getline.
-*@line: pointer to character buffer that will receive the input.
-*@s: the buffer size.
-*@stream: pointer to input stream read from
-*Return: number of readed bytes
-*/
-ssize_t _getLine(char **line, size_t *s, void *stream)
-{
-	static char buffer[1024];
-	static int pos;
-	static int size;
-	int fd;
-	size_t count = 0;
-	char c;
-	intptr_t intptr;
-
-	pos = 0;
-	size = 0;
-	intptr = (intptr_t)stream;
-	fd = (int) intptr;
-	printf("fd is %d\n", fd);
-	if ((line == NULL) || (*line == NULL) || (*s == 0))
-	return (-1);
-	while (1)
-	{
-		if (pos >= size) /*check if u have to read some data to the buffer*/
-		{
-			size = read(fd, buffer, 1024);
-			if ((size < 0) || (size == 0))
-			return (-1);
-		}
-		c = buffer[pos];
-		(*line)[count] = c;
-		pos++;
-		count++;
-		if (c == '\n') /*end of line*/
-		break;
-		if (count == *s)
-		{
-			*line = realloc(*line, (*s + 1024));
-			if (*line == NULL)
-			return (-1);
-		}
-		*s = *s + 1024;
-	}
-	(*line)[count] = '\0';
-	return (count);
-}
-
-
 
 /**
 *excludeUnNeedTerminatot - Remove unNeeded terminators from the text end

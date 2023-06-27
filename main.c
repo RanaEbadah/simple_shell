@@ -36,7 +36,7 @@ __attribute__((unused)) char *argv[], char *envp[])
 	{
 		while (1)
 		{
-			printf("$ ");
+			printString("$ ");
 			readed = getline(&line, &len, stdin);
 			if (readed == -1) /*EOF handling*/
 			exitTheShell(line, 0);
@@ -53,9 +53,6 @@ __attribute__((unused)) char *argv[], char *envp[])
 }
 
 
-
-
-
 /**
 *notFound - display not Found error
 *@shellName: the input string.
@@ -65,7 +62,23 @@ __attribute__((unused)) char *argv[], char *envp[])
 */
 int notFound(char *shellName, int errorNum, char *commandName)
 {
-	printf("%s: %d: %s: not found\n", shellName, errorNum, commandName);
+	int errorMsgLen, shellNamelen, commandNameLen;
+	char errorMsg[] = ": not found\n";
+
+	if((shellName == NULL) || (commandName == NULL))
+	return (-1);
+
+	errorMsgLen = _strlen(errorMsg);
+	shellNamelen = _strlen(shellName);
+	commandNameLen = _strlen(commandName);
+
+	write(STDOUT_FILENO, shellName, shellNamelen);
+    write(STDOUT_FILENO, ": ", 2);
+    write(STDOUT_FILENO, &errorNum, sizeof(errorNum));
+    write(STDOUT_FILENO, ": ", 2);
+    write(STDOUT_FILENO, commandName, commandNameLen);
+    write(STDOUT_FILENO, errorMsg, errorMsgLen); 
+
 	errorNum++;
 	return (errorNum);
 }
@@ -79,7 +92,7 @@ int notFound(char *shellName, int errorNum, char *commandName)
 void exitTheShell(char *line, int exitStatus)
 {
 	if (!exitStatus)
-	printf("\n");
+	printString("\n");
 	free(line);
 	exit(0);
 }
@@ -140,7 +153,7 @@ char **args, char **envp, char **argv, int *errorNum)
 	else if (_strcmp(argsStr, envStr) == 0)
 	{
 		/* Env */
-		printf("This is the env command\n");
+		printString("This is the env command\n");
 	}
 	else
 	{
