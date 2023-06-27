@@ -121,8 +121,8 @@ char **args, char **envp, char **argv, int *errorNum)
 	if (_strcmp(argsStr, exitStr) == 0)
 	{
 		/* Exit */
-		/*exitTheShell(line, 1);*/
-		int sh_exit(char *arg, int *status);
+		exitTheShell(line, 1);
+		/*int sh_exit(char *arg, int *status);*/
 	}
 	else if (_strcmp(argsStr, envStr) == 0)
 	{
