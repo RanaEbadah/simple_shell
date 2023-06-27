@@ -167,7 +167,6 @@ char **args, char **envp, char **argv, int *errorNum)
 	else if (_strcmp(argsStr, envStr) == 0)
 	{
 		/* Env */
-		printString("This is the env command\n");
 		_getEnv(envp);
 	}
 	else
