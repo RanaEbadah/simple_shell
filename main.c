@@ -169,7 +169,7 @@ char **args, char **envp, char **argv, int *errorNum)
 	{
 		/* Env */
 		printString("This is the env command\n");
-		_getEnv(envp);
+		_getEnv();
 	}
 	else
 	{

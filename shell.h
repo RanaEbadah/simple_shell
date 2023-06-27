@@ -36,7 +36,7 @@ int printString(char *str);
 char *_strdup(char *str);
 char *excludeUnNeedTerminatot(char *str);
 void printInteger(int num);
-int _getEnv(char **env);
+int _getEnv();
 
 
 /*main.c*/
