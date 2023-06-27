@@ -53,6 +53,7 @@ __attribute__((unused)) char *argv[], char *envp[])
 			executeCommand(path, args, envp, argv, &errorNum);
 		}
 	}
+	free(line);
 	return (0);
 }
 
