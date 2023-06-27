@@ -77,6 +77,13 @@ char *isExec(char *path, char *fileName)
 	if ((path == NULL) || (fileName == NULL))
 	return (NULL);
 
+	if (fileName[0] == '/')
+	{
+		if (access(fileName, X_OK) == 0)
+		return (fileName);
+		else
+		return (NULL);
+	}
 	/*we will make a copy from path to avoid changing the value of path itself*/
 	path_copy = _strdup(path);
 	if (path_copy == NULL)
@@ -84,24 +91,19 @@ char *isExec(char *path, char *fileName)
 		free(path_copy);
 		return (NULL);
 	}
-
 	token = strtok(path_copy, ":");
-
 	while (token != NULL)
 	{
 		if (token[_strlen(token) - 1] != '/')
 		filePath = concat_string("/", fileName);
 		else
 		filePath = fileName;
-
 		token = concat_string(token, filePath);
-
 		if (access(token, F_OK) == 0)
 		{
 			free(path_copy);
 			return (token);
 		}
-
 		token = strtok(NULL, ":");
 	}
 		free(path_copy);

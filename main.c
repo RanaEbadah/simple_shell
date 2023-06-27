@@ -18,29 +18,43 @@ __attribute__((unused)) char *argv[], char *envp[])
 	static int errorNum;
 
 	errorNum = 1;
-
 	envpCopy = envp;
 	path = getPathFromEnv(envpCopy);/*get the path*/
-	while (1)
+	if (!isatty(STDIN_FILENO)) /*non interactive*/
 	{
-		printf("$ ");
-		readed = getline(&line, &len, stdin);
-		if (readed == -1) /*EOF handling*/
-		exitTheShell(line, 0);
-
-		if (commandIsSpaceOrEnter(line) == 1)
-		continue;/*if the input is enter or space continue*/
-
-		args = handleCommandLine(line); /*parse the line to command and arguments*/
-		if ((args == NULL) || (path == NULL))
-		return (1);
-/********************************/
-		executeCommand(line, path, args, envp, argv, &errorNum);
-/*********************************/
+		while ((readed = getline(&line, &len, stdin)) != -1)
+		{
+			if (commandIsSpaceOrEnter(line) == 1)
+			continue;/*if the input is enter or space continue*/
+			args = handleCommandLine(line); /*parse the line to command and arguments*/
+			if ((args == NULL) || (path == NULL))
+			return (1);
+			executeCommand(line, path, args, envp, argv, &errorNum);
+		}
+	}
+	else
+	{
+		while (1)
+		{
+			printf("$ ");
+			readed = getline(&line, &len, stdin);
+			if (readed == -1) /*EOF handling*/
+			exitTheShell(line, 0);
+			if (commandIsSpaceOrEnter(line) == 1)
+			continue;/*if the input is enter or space continue*/
+			args = handleCommandLine(line); /*parse the line to command and arguments*/
+			if ((args == NULL) || (path == NULL))
+			return (1);
+			executeCommand(line, path, args, envp, argv, &errorNum);
+		}
 	}
 	free(args);
 	return (0);
 }
+
+
+
+
 
 /**
 *notFound - display not Found error
@@ -118,7 +132,6 @@ char **args, char **envp, char **argv, int *errorNum)
 	char *argsStr, *exitStr = "exit", *envStr = "env", *filePath;
 
 	argsStr = excludeUnNeedTerminatot(args[0]);
-
 	if (_strcmp(argsStr, exitStr) == 0)
 	{
 		/* Exit */
