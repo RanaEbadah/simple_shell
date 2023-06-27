@@ -3,7 +3,7 @@
 /**
  *print_current_enviroment- prints the elements of each node in a linked list
  *@head: pointer to the first node of the linked list
- *Return: the number of nodes in the linked list
+ *Return: the number of elements in the linked list
  */
 size_t print_current_enviroment(const list_t *head)
 {
