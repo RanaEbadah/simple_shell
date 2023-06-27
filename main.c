@@ -1,6 +1,5 @@
 #include "shell.h"
 
-
 /**
  * main - a function that excecute a simple shell
  *@argc: the number of arguments (unused)
@@ -48,7 +47,7 @@ __attribute__((unused)) char *argv[], char *envp[])
 			executeCommand(line, path, args, envp, argv, &errorNum);
 		}
 	}
-	free(args);
+	
 	return (0);
 }
 
@@ -155,6 +154,7 @@ char **args, char **envp, char **argv, int *errorNum)
 	if (_strcmp(argsStr, exitStr) == 0)
 	{
 		/* Exit */
+		free(args);
 		exitTheShell(line, 1);
 	}
 	else if (_strcmp(argsStr, envStr) == 0)
@@ -175,4 +175,6 @@ char **args, char **envp, char **argv, int *errorNum)
 			executeTheExecCommand(filePath, args, envp);
 		}
 	}
+	free(filePath);
+	free(args);
 }

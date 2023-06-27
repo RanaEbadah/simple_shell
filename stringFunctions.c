@@ -45,7 +45,10 @@ char *concat_string(char *dest, char *src)
 	resultStr = malloc((srcLen + destlen + 1) * sizeof(char));
 
 	if (resultStr == NULL)
-	return (NULL);
+	{
+		free(resultStr);
+		return (NULL);
+	}
 
 	for (i = 0; i < (srcLen + destlen); i++)
 	{

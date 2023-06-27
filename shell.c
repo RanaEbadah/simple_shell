@@ -100,12 +100,13 @@ char *isExec(char *path, char *fileName)
 		token = concat_string(token, filePath);
 		if (access(token, F_OK) == 0)
 		{
-			free(path_copy);
+			free(filePath);
 			return (token);
 		}
 		token = strtok(NULL, ":");
 	}
-		free(path_copy);
+		free(token);
+		free(filePath);
 		return (NULL);
 	}
 
