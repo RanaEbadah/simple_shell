@@ -101,12 +101,14 @@ char *isExec(char *path, char *fileName)
 		if (access(token, F_OK) == 0)
 		{
 			free(filePath);
+			free(path_copy);
 			return (token);
 		}
 		token = strtok(NULL, ":");
 	}
 		free(token);
 		free(filePath);
+		free(path_copy);
 		return (NULL);
 	}
 

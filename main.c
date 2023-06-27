@@ -27,8 +27,11 @@ __attribute__((unused)) char *argv[], char *envp[])
 			continue;/*if the input is enter or space continue*/
 			args = handleCommandLine(line); /*parse the line to command and arguments*/
 			if ((args == NULL) || (path == NULL))
-			return (1);
-			executeCommand(line, path, args, envp, argv, &errorNum);
+			{
+				free(args);
+				return (1);
+			}
+			executeCommand(path, args, envp, argv, &errorNum);
 		}
 	}
 	else
@@ -38,16 +41,18 @@ __attribute__((unused)) char *argv[], char *envp[])
 			printString("$ ");
 			readed = getline(&line, &len, stdin);
 			if (readed == -1) /*EOF handling*/
-			exitTheShell(line, 0);
+			exitTheShell(0);
 			if (commandIsSpaceOrEnter(line) == 1)
 			continue;/*if the input is enter or space continue*/
 			args = handleCommandLine(line); /*parse the line to command and arguments*/
 			if ((args == NULL) || (path == NULL))
-			return (1);
-			executeCommand(line, path, args, envp, argv, &errorNum);
+			{
+				free(args);
+				return (1);
+			}
+			executeCommand(path, args, envp, argv, &errorNum);
 		}
 	}
-	
 	return (0);
 }
 
@@ -70,7 +75,9 @@ int notFound(char *shellName, int errorNum, char *commandName)
 
 	errorNumptr = malloc(sizeof(int));
 	if (errorNumptr == NULL)
-	return (-1);
+	{
+		return (-1);
+	}
 
 	*errorNumptr = errorNum;
 	errorMsgLen = _strlen(errorMsg);
@@ -95,11 +102,11 @@ int notFound(char *shellName, int errorNum, char *commandName)
 *@line: the command line(to free it).
 *@exitStatus: 1 if exit command, 0 if ctrl+D
 */
-void exitTheShell(char *line, int exitStatus)
+void exitTheShell(int exitStatus)
 {
 	if (!exitStatus)
 	printString("\n");
-	free(line);
+	/*free(line);*/
 	exit(0);
 }
 
@@ -145,7 +152,7 @@ int executeTheExecCommand(char *filePath, char **args, char *envp[])
 *@errorNum: the number of the error
 *Return: void
 */
-void executeCommand(char *line, char *path,
+void executeCommand(char *path,
 char **args, char **envp, char **argv, int *errorNum)
 {
 	char *argsStr, *exitStr = "exit", *envStr = "env", *filePath;
@@ -155,12 +162,13 @@ char **args, char **envp, char **argv, int *errorNum)
 	{
 		/* Exit */
 		free(args);
-		exitTheShell(line, 1);
+		exitTheShell(1);
 	}
 	else if (_strcmp(argsStr, envStr) == 0)
 	{
 		/* Env */
 		printString("This is the env command\n");
+		_getEnv(envp);
 	}
 	else
 	{
@@ -175,6 +183,6 @@ char **args, char **envp, char **argv, int *errorNum)
 			executeTheExecCommand(filePath, args, envp);
 		}
 	}
-	free(filePath);
 	free(args);
+	/*free(filePath);*/
 }

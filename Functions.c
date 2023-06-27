@@ -87,3 +87,20 @@ void printInteger(int num)
 	for (i = len - 1; i >= 0; i--)
 	write(STDOUT_FILENO, &str[i], 1);
 }
+
+int _getEnv(char **env)
+{
+	if(env == NULL)
+	return (-1);
+
+	while (*env != NULL)
+	{
+		printString(*env);
+		printString("\n");
+
+		env++;
+	}
+
+	return (1);
+
+}

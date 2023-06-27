@@ -36,13 +36,14 @@ int printString(char *str);
 char *_strdup(char *str);
 char *excludeUnNeedTerminatot(char *str);
 void printInteger(int num);
+int _getEnv(char **env);
 
 
 /*main.c*/
 
-void exitTheShell(char *line, int exitStatus);
+void exitTheShell(int exitStatus);
 int notFound(char *shellName, int errorNum, char *commandName);
 int executeTheExecCommand(char *filePath, char **args, char *envp[]);
-void executeCommand(char *line, char *path, char **args, char **envp,
+void executeCommand(char *path, char **args, char **envp,
 char **argv, int *errorNum);
 #endif /*SHELL_H */
