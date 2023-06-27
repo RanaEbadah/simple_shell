@@ -24,6 +24,6 @@ return (i);
 */
 int sh_env(list_t *list)
 {
-print_current_enviroment(data->env);
+print_current_enviroment(list->env);
 return (0);
 }
