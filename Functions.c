@@ -106,4 +106,5 @@ int _getEnv(char **env)
 	}
 
 	return (1);
+
 }
