@@ -73,7 +73,7 @@ char *excludeUnNeedTerminatot(char *str)
 void printInteger(int num)
 {
 	char str[20];
-	int len = 0, digit;
+	int len = 0, digit, i;
 
 	/* Convert the integer to a string of digits in reverse order */
 	while (num != 0)
@@ -84,6 +84,6 @@ void printInteger(int num)
 	}
 
 	/* Write the string in reverse*/
-	for (int i = len - 1; i >= 0; i--)
+	for (i = len - 1; i >= 0; i--)
 	write(STDOUT_FILENO, &str[i], 1);
 }
