@@ -95,6 +95,9 @@ int _getEnv(char **env)
 
 	while (*env != NULL)
 	{
+		printInteger(_strlen(*env));
+
+		printString("\n");
 		printString(*env);
 		printString("\n");
 

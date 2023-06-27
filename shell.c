@@ -102,6 +102,7 @@ char *isExec(char *path, char *fileName)
 		{
 			free(filePath);
 			free(path_copy);
+			free(fileName);
 			return (token);
 		}
 		token = strtok(NULL, ":");
