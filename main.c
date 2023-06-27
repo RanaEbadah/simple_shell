@@ -38,6 +38,7 @@ __attribute__((unused)) char *argv[], char *envp[])
 		executeCommand(line, path, args, envp, argv, &errorNum);
 /*********************************/
 	}
+	free(args);
 	return (0);
 }
 
@@ -122,7 +123,6 @@ char **args, char **envp, char **argv, int *errorNum)
 	{
 		/* Exit */
 		exitTheShell(line, 1);
-		/*int sh_exit(char *arg, int *status);*/
 	}
 	else if (_strcmp(argsStr, envStr) == 0)
 	{

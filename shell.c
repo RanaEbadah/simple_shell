@@ -16,7 +16,10 @@ char **handleCommandLine(char *command)
 
 	args = malloc(30 * sizeof(char *));
 	if (args == NULL)
-	return (NULL);
+	{
+		free(args);
+		return (NULL);
+	}
 
 	token = strtok(command, " ");
 
@@ -77,7 +80,10 @@ char *isExec(char *path, char *fileName)
 	/*we will make a copy from path to avoid changing the value of path itself*/
 	path_copy = _strdup(path);
 	if (path_copy == NULL)
-	return (NULL);
+	{
+		free(path_copy);
+		return (NULL);
+	}
 
 	token = strtok(path_copy, ":");
 
@@ -92,12 +98,14 @@ char *isExec(char *path, char *fileName)
 
 		if (access(token, F_OK) == 0)
 		{
+			free(path_copy);
 			return (token);
 		}
 
 		token = strtok(NULL, ":");
 	}
-	return (NULL);
+		free(path_copy);
+		return (NULL);
 	}
 
 
