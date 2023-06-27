@@ -53,7 +53,6 @@ __attribute__((unused)) char *argv[], char *envp[])
 			executeCommand(path, args, envp, argv, &errorNum);
 		}
 	}
-	free(args);
 	return (0);
 }
 
@@ -168,6 +167,7 @@ char **args, char **envp, char **argv, int *errorNum)
 	else if (_strcmp(argsStr, envStr) == 0)
 	{
 		/* Env */
+		printString("This is the env command\n");
 		_getEnv(envp);
 	}
 	else
@@ -183,6 +183,6 @@ char **args, char **envp, char **argv, int *errorNum)
 			executeTheExecCommand(filePath, args, envp);
 		}
 	}
-	/*free(filePath);*/
 	free(args);
+	/*free(filePath);*/
 }
