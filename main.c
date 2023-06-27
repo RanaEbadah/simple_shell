@@ -53,6 +53,7 @@ __attribute__((unused)) char *argv[], char *envp[])
 			executeCommand(path, args, envp, argv, &errorNum);
 		}
 	}
+	free(args);
 	return (0);
 }
 
@@ -182,6 +183,6 @@ char **args, char **envp, char **argv, int *errorNum)
 			executeTheExecCommand(filePath, args, envp);
 		}
 	}
-	free(args);
 	/*free(filePath);*/
+	free(args);
 }
