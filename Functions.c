@@ -68,9 +68,10 @@ char *excludeUnNeedTerminatot(char *str)
 /**
 *printInteger - print int
 *@num: the input int to be print.
+*@fd: the file descriptor
 *Return: void
 */
-void printInteger(int num)
+void printInteger(int num, int fd)
 {
 	char str[20];
 	int len = 0, digit, i;
@@ -85,7 +86,7 @@ void printInteger(int num)
 
 	/* Write the string in reverse*/
 	for (i = len - 1; i >= 0; i--)
-	write(STDOUT_FILENO, &str[i], 1);
+	write(fd, &str[i], 1);
 }
 
 /**

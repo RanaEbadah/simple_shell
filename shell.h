@@ -35,7 +35,7 @@ int commandIsSpaceOrEnter(char *strCommand);
 int printString(char *str);
 char *_strdup(char *str);
 char *excludeUnNeedTerminatot(char *str);
-void printInteger(int num);
+void printInteger(int num, int fd);
 int _getEnv(char **env);
 
 

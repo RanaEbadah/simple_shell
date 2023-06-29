@@ -28,11 +28,11 @@ int notFound(char *shellName, int errorNum, char *commandName)
 	shellNamelen = _strlen(shellName);
 	commandNameLen = _strlen(commandName);
 
-	write(STDOUT_FILENO, shellName, shellNamelen);
-	write(STDOUT_FILENO, ": ", 2);
-	printInteger(errorNum);
-	write(STDOUT_FILENO, ": ", 2);
-	write(STDOUT_FILENO, commandName, commandNameLen);
+	write(2, shellName, shellNamelen);
+	write(2, ": ", 2);
+	printInteger(errorNum, 2);
+	write(2, ": ", 2);
+	write(2, commandName, commandNameLen);
 	write(STDOUT_FILENO, errorMsg, errorMsgLen);
 
 	errorNum++;
@@ -77,7 +77,10 @@ int executeTheExecCommand(char *filePath, char **args, char *envp[])
 		}
 		executed = execve(filePath, args, envp);
 		if (executed == -1)
-		return (1);
+		{
+			perror(NULL);
+			exit (1);
+		}
 	}
 	else /*it is a parent*/
 	wait(&status);
